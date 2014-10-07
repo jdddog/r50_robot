@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="r50_arm">
+
+        <link name="${prefix}_shoulder_pitch" />
+        <link name="${prefix}_shoulder_yaw" />
+        <link name="${prefix}_elbow_roll" />
+        <link name="${prefix}_elbow_yaw" />
+        <link name="${prefix}_wrist_roll" />
+
+        <joint name="${prefix}_shoulder_pitch_joint" type="revolute">
+            <parent link="torso"/>
+            <child link="${prefix}_shoulder_pitch"/>
+            <origin xyz="0 ${reflect * -0.07125} 0.0856" rpy="0 0 0"/> <!-- 1 for right, -1 for left -->
+            <axis xyz="1 0 0"/>
+            <limit velocity="1.0" effort="1" lower="0" upper="${85 * TO_RADIANS}" />
+        </joint>
+
+        <joint name="${prefix}_shoulder_yaw_joint" type="revolute">
+            <parent link="${prefix}_shoulder_pitch"/>
+            <child link="${prefix}_shoulder_yaw"/>
+            <origin xyz="0.0345 0 0" rpy="0 0 0"/>
+            <axis xyz="0 1 0"/>
+            <limit velocity="1.0" effort="1" lower="${-90 * TO_RADIANS}" upper="${90 * TO_RADIANS}" />
+        </joint>
+
+        <joint name="${prefix}_elbow_roll_joint" type="revolute">
+            <parent link="${prefix}_shoulder_yaw"/>
+            <child link="${prefix}_elbow_yaw"/>
+            <origin xyz="0.1115 0 0" rpy="0 0 0"/>
+            <axis xyz="1 0 0"/>
+            <limit velocity="1.0" effort="1" lower="${-85 * TO_RADIANS}" upper="${85 * TO_RADIANS}" />
+        </joint>
+
+        <joint name="${prefix}_elbow_yaw_joint" type="revolute">
+            <parent link="${prefix}_elbow_roll"/>
+            <child link="${prefix}_elbow_yaw"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+            <limit velocity="1.0" effort="1" lower="0" upper="${90 * TO_RADIANS}" />
+        </joint>
+
+        <joint name="${prefix}_wrist_roll_joint" type="revolute">
+            <parent link="${prefix}_elbow_yaw"/>
+            <child link="${prefix}_wrist_roll"/>
+            <origin xyz="0.0823 0 0" rpy="0 0 0"/>
+            <axis xyz="1 0 0"/>
+            <limit velocity="1.0" effort="1" lower="0" upper="{90 * TO_RADIANS}" />
+        </joint>
+
+    </xacro:macro>
+</robot>
