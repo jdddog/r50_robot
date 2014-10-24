@@ -1,27 +1,29 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="r50">
+    <xacro:property name="PI" value="3.14159265359"/>
+    <xacro:property name="MM_TO_M" value="0.001"/>
+    <xacro:property name="TO_RADIANS" value="0.01745329251"/>
 
     <!-- Includes -->
     <xacro:include filename="$(find r50_description)/urdf/r50_head.urdf.xacro"/>
-    <xacro:include filename="$(find r50_description)/urdf/r50_torso.urdf.xacro"/>
+    <!--<xacro:include filename="$(find r50_description)/urdf/r50_torso.urdf.xacro"/>-->
     <xacro:include filename="$(find r50_description)/urdf/r50_arm.urdf.xacro"/>
     <xacro:include filename="$(find r50_description)/urdf/r50_leg.urdf.xacro"/>
 
     <!-- Properties -->
-    <xacro:property name="PI" value="3.14159265359"/>
-    <xacro:property name="TO_RADIANS" value="0.01745329251"/>
 
 
+    <link name="torso" />
     <!-- Head and torso -->
     <xacro:r50_head/>
-    <xacro:r50_torso/>
+    <!--<xacro:r50_torso/>-->
 
     <!-- Arms -->
-    <xacro:r50_arm prefix="l" reflect="-1"/>
-    <xacro:r50_arm prefix="r" reflect="1"/>
+    <xacro:r50_arm prefix="L" reflect="-1"/>
+    <xacro:r50_arm prefix="R" reflect="1"/>
 
     <!-- Arms -->
-    <xacro:r50_leg prefix="l" reflect="-1"/>
-    <xacro:r50_leg prefix="r" reflect="1"/>
+    <xacro:r50_leg prefix="L" reflect="-1"/>
+    <xacro:r50_leg prefix="R" reflect="1"/>
 
 </robot>

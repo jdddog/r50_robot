@@ -1,51 +1,52 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <xacro:macro name="r50_arm">
+    <xacro:macro name="r50_arm" params="prefix reflect">
 
-        <link name="${prefix}_shoulder_pitch" />
-        <link name="${prefix}_shoulder_yaw" />
-        <link name="${prefix}_elbow_roll" />
-        <link name="${prefix}_elbow_yaw" />
-        <link name="${prefix}_wrist_roll" />
+        <link name="${prefix}ShoulderPitch" />
+        <link name="${prefix}ShoulderYaw" />
+        <link name="${prefix}ElbowRoll" />
+        <link name="${prefix}ElbowYaw" />
+        <link name="${prefix}WristRoll" />
 
-        <joint name="${prefix}_shoulder_pitch_joint" type="revolute">
+
+        <joint name="${prefix}ShoulderPitchJoint" type="revolute">
             <parent link="torso"/>
-            <child link="${prefix}_shoulder_pitch"/>
-            <origin xyz="0 ${reflect * -0.07125} 0.0856" rpy="0 0 0"/> <!-- 1 for right, -1 for left -->
+            <child link="${prefix}ShoulderPitch"/>
+            <origin xyz="0 ${reflect * (-142.3 / 2.0) * MM_TO_M} ${(126.9 - 41.3) * MM_TO_M}" rpy="0 0 ${reflect * -90.0 * TO_RADIANS}"/> <!-- 1 for right, -1 for left -->
             <axis xyz="1 0 0"/>
-            <limit velocity="1.0" effort="1" lower="0" upper="${85 * TO_RADIANS}" />
+            <limit velocity="1.0" effort="1" lower="0" upper="${85.0 * TO_RADIANS}" />
         </joint>
 
-        <joint name="${prefix}_shoulder_yaw_joint" type="revolute">
-            <parent link="${prefix}_shoulder_pitch"/>
-            <child link="${prefix}_shoulder_yaw"/>
-            <origin xyz="0.0345 0 0" rpy="0 0 0"/>
+        <joint name="${prefix}ShoulderYawJoint" type="revolute">
+            <parent link="${prefix}ShoulderPitch"/>
+            <child link="${prefix}ShoulderYaw"/>
+            <origin xyz="${34.5 * MM_TO_M} 0 0" rpy="0 0 0"/>
             <axis xyz="0 1 0"/>
-            <limit velocity="1.0" effort="1" lower="${-90 * TO_RADIANS}" upper="${90 * TO_RADIANS}" />
+            <limit velocity="1.0" effort="1" lower="${-90.0 * TO_RADIANS}" upper="${90.0 * TO_RADIANS}" />
         </joint>
 
-        <joint name="${prefix}_elbow_roll_joint" type="revolute">
-            <parent link="${prefix}_shoulder_yaw"/>
-            <child link="${prefix}_elbow_yaw"/>
-            <origin xyz="0.1115 0 0" rpy="0 0 0"/>
+        <joint name="${prefix}ElbowRollJoint" type="revolute">
+            <parent link="${prefix}ShoulderYaw"/>
+            <child link="${prefix}ElbowRoll"/>
+            <origin xyz="${111.5 * MM_TO_M} 0 0" rpy="0 0 0"/>
             <axis xyz="1 0 0"/>
-            <limit velocity="1.0" effort="1" lower="${-85 * TO_RADIANS}" upper="${85 * TO_RADIANS}" />
+            <limit velocity="1.0" effort="1" lower="${-85.0 * TO_RADIANS}" upper="${85.0 * TO_RADIANS}" />
         </joint>
 
-        <joint name="${prefix}_elbow_yaw_joint" type="revolute">
-            <parent link="${prefix}_elbow_roll"/>
-            <child link="${prefix}_elbow_yaw"/>
+        <joint name="${prefix}ElbowYawJoint" type="revolute">
+            <parent link="${prefix}ElbowRoll"/>
+            <child link="${prefix}ElbowYaw"/>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <axis xyz="0 0 1"/>
-            <limit velocity="1.0" effort="1" lower="0" upper="${90 * TO_RADIANS}" />
+            <limit velocity="1.0" effort="1" lower="0" upper="${90.0 * TO_RADIANS}" />
         </joint>
 
-        <joint name="${prefix}_wrist_roll_joint" type="revolute">
-            <parent link="${prefix}_elbow_yaw"/>
-            <child link="${prefix}_wrist_roll"/>
-            <origin xyz="0.0823 0 0" rpy="0 0 0"/>
+        <joint name="${prefix}WristRollJoint" type="revolute">
+            <parent link="${prefix}ElbowYaw"/>
+            <child link="${prefix}WristRoll"/>
+            <origin xyz="${82.3 * MM_TO_M} 0 0" rpy="0 0 0"/>
             <axis xyz="1 0 0"/>
-            <limit velocity="1.0" effort="1" lower="0" upper="{90 * TO_RADIANS}" />
+            <limit velocity="1.0" effort="1" lower="0" upper="${90.0 * TO_RADIANS}" />
         </joint>
 
     </xacro:macro>

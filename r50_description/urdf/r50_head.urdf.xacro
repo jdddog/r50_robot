@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="r50_head" >
+
+        <link name="NeckYaw" />
+
+        <joint name="NeckYawJoint" type="revolute">
+            <parent link="torso"/>
+            <child link="NeckYaw"/>
+            <origin xyz="0 0 ${126.9 * MM_TO_M}" rpy="0 0 0"/> <!-- 1 for right, -1 for left -->
+            <axis xyz="0 0 1"/>
+            <limit velocity="1.0" effort="1" lower="${-90 * TO_RADIANS}" upper="${90 * TO_RADIANS}" />
+        </joint>
+    </xacro:macro>
+</robot>

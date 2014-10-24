@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="r50_leg" params="prefix reflect">
+
+        <link name="${prefix}HipRoll" />
+        <link name="${prefix}HipYaw" />
+        <link name="${prefix}HipPitch" />
+        <link name="${prefix}KneePitch" />
+        <link name="${prefix}AnklePitch" />
+        <link name="${prefix}AnkleRoll" />
+        <!-- 1 for right, -1 for left -->
+
+        <joint name="${prefix}HipRollJoint" type="revolute">
+            <parent link="torso"/>
+            <child link="${prefix}HipRoll"/>
+            <origin xyz="${10 * MM_TO_M} ${reflect * (-89.6/ 2.0) * MM_TO_M} ${-54.3 * MM_TO_M}" rpy="0 0 0"/> <!-- no data on hip roll x position relative to torso; estimate for now -->
+            <axis xyz="1 0 0"/>
+            <limit velocity="1.0" effort="1" lower="${0 * TO_RADIANS}" upper="${45 * TO_RADIANS}" />
+        </joint>
+
+        <joint name="${prefix}HipYawJoint" type="revolute">
+            <parent link="${prefix}HipRoll"/>
+            <child link="${prefix}HipYaw"/>
+            <origin xyz="0 0 ${-20 * MM_TO_M}" rpy="0 0 0"/> <!-- no data on hip yaw x position; estimate for now -->
+            <axis xyz="0 0 1"/>
+            <limit velocity="1.0" effort="1" lower="${-90 * TO_RADIANS}" upper="${90 * TO_RADIANS}" />
+        </joint>
+
+        <joint name="${prefix}HipPitchJoint" type="revolute">
+            <parent link="${prefix}HipYaw"/>
+            <child link="${prefix}HipPitch"/>
+            <origin xyz="0 0 ${-(60.9 - 20) * MM_TO_M}" rpy="0 0 0"/>
+            <axis xyz="0 1 0"/>
+            <limit velocity="1.0" effort="1" lower="${-90 * TO_RADIANS}" upper="0" />
+        </joint>
+
+        <joint name="${prefix}KneePitchJoint" type="revolute">
+            <parent link="${prefix}HipPitch"/>
+            <child link="${prefix}KneePitch"/>
+            <origin xyz="0 0 ${-96.7 * MM_TO_M}" rpy="0 0 0"/>
+            <axis xyz="0 1 0"/>
+            <limit velocity="1.0" effort="1" lower="0" upper="${90 * TO_RADIANS}" />
+        </joint>
+
+        <joint name="${prefix}AnklePitchJoint" type="revolute">
+            <parent link="${prefix}KneePitch"/>
+            <child link="${prefix}AnklePitch"/>
+            <origin xyz="0 0 ${-95.3 * MM_TO_M}" rpy="0 0 0"/>
+            <axis xyz="0 1 0"/>
+            <limit velocity="1.0" effort="1" lower="${-45 * TO_RADIANS}" upper="${75 * TO_RADIANS}" />
+        </joint>
+
+        <joint name="${prefix}AnkleRollJoint" type="revolute">
+            <parent link="${prefix}AnklePitch"/>
+            <child link="${prefix}AnkleRoll"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <axis xyz="1 0 0"/>
+            <limit velocity="1.0" effort="1" lower="${-25.0 * TO_RADIANS}" upper="${25.0 * TO_RADIANS}" />
+        </joint>
+
+    </xacro:macro>
+</robot>
